@@ -1,30 +1,34 @@
 <script setup lang="ts"></script>
 
 <template>
-  <v-container class="d-flex flex-column align-center justify-center" fluid>
+  <VContainer class="d-flex flex-column align-center justify-center" fluid>
     <div class="h-50 w-66 d-flex flex-column align-center justify-center">
-      <v-row align="center" justify="center">
-        <v-col cols="12">
+      <VRow align="center" justify="center">
+        <VCol cols="12">
           <div class="text-center">
             <h1>Welcome to Our Project Management Website</h1>
             <p>This is the best place to manage your projects efficiently and effectively.</p>
           </div>
-        </v-col>
-      </v-row>
-      <v-row align="center" justify="center" class="flex-row">
-        <v-col cols="12">
+        </VCol>
+      </VRow>
+      <VRow align="center" justify="center" class="flex-row">
+        <VCol cols="12">
           <div class="text-center">
-            <VBtn color="grey" class="rounded-xl ma-5 text-black text-none" size="x-large"
-              >Sign In</VBtn
-            >
-            <VBtn color="white" class="rounded-xl text-black text-none" size="x-large"
-              >Sign Up</VBtn
-            >
+            <RouterLink to="/signup">
+              <VBtn color="white" class="rounded-xl text-black text-none" size="x-large">
+                Sign Up
+              </VBtn>
+            </RouterLink>
+            <RouterLink to="/signin">
+              <VBtn color="grey" class="rounded-xl ma-5 text-black text-none" size="x-large">
+                Sign In
+              </VBtn>
+            </RouterLink>
           </div>
-        </v-col>
-      </v-row>
+        </VCol>
+      </VRow>
     </div>
-  </v-container>
+  </VContainer>
 </template>
 <style scoped>
 .v-container {
