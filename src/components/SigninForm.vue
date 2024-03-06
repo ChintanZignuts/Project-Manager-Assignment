@@ -32,6 +32,7 @@ setTimeout(() => {
                 <VCol cols="12">
                   <VTextField
                     label="Email"
+                    type="email"
                     placeholder="Email"
                     variant="outlined"
                     :rules="[EmailValidator]"
@@ -42,6 +43,7 @@ setTimeout(() => {
                 <VCol cols="12">
                   <VTextField
                     label="Password"
+                    type="password"
                     placeholder="Enter your password"
                     variant="outlined"
                     v-model="user.password"

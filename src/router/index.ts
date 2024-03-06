@@ -32,13 +32,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
-  if (to.name === 'Dashboard' && !token) {
+  if (to.name === 'DashBoard' && !token) {
     next({ name: 'home' })
   } else if (
     (to.name === 'home' || to.name === 'SignupForm' || to.name === 'SigninForm') &&
     token
   ) {
-    next({ name: 'Dashboard' })
+    next({ name: 'DashBoard' })
   } else {
     next()
   }

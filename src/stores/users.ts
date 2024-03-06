@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { toast, type ToastOptions } from 'vue3-toastify'
 import type { User, oldUser } from '../user'
 
 interface UserState {
@@ -14,56 +15,36 @@ export const useUsers = defineStore('users', {
   }),
 
   actions: {
-    async login(credentials: oldUser) {
+    async handleRequest(request: Promise<any>, errorMessage: string) {
       try {
-        const response = await axios.post('/api/login', credentials)
-        this.user = response.data // Update based on your API response structure
-        this.isLoggedIn = true
+        const response = await request
         return response.data
-      } catch (error) {
-        console.error('Login failed:', error)
-        throw error
+      } catch (error: any) {
+        toast.error(error.response?.data.message || errorMessage, {
+          autoClose: 1000,
+          position: toast.POSITION.TOP_RIGHT
+        } as ToastOptions)
       }
+    },
+
+    async login(credentials: oldUser) {
+      return this.handleRequest(axios.post('/api/login', credentials), 'Login failed:')
     },
 
     async logout() {
-      try {
-        const token = localStorage.getItem('token')
-        await axios.post(
-          '/api/logout',
-          {},
-          {
-            headers: { Authorization: 'Bearer ' + token }
-          }
-        )
-        this.user = null
-        this.isLoggedIn = false
-      } catch (error) {
-        console.error('Logout failed:', error)
-        throw error
-      }
+      const token = localStorage.getItem('token')
+      return this.handleRequest(
+        axios.post('/api/logout', {}, { headers: { Authorization: 'Bearer ' + token } }),
+        'Logout failed:'
+      )
     },
 
     async register(newUser: User) {
-      try {
-        const response = await axios.post('api/register', newUser)
-        this.isLoggedIn = true
-        this.user = response.data.user
-        return response.data
-      } catch (error) {
-        console.error('Registration failed:', error)
-        throw error
-      }
+      return this.handleRequest(axios.post('api/register', newUser), 'Registration failed:')
     },
 
     async getUser() {
-      try {
-        const response = await axios.get('/api/user')
-        this.user = response.data // Update based on your API response structure
-      } catch (error) {
-        console.error('Get user failed:', error)
-        throw error
-      }
+      return this.handleRequest(axios.get('/api/user'), 'Get user failed:')
     }
   }
 })

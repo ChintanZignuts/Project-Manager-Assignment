@@ -49,6 +49,7 @@ setTimeout(() => {
                 <VCol cols="12">
                   <VTextField
                     label="Email"
+                    type="email"
                     placeholder="Email"
                     variant="outlined"
                     :rules="[EmailValidator]"
